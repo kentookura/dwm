@@ -61,8 +61,9 @@ static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
-static const char *statuscmds[] = { "notify-send Mouse$BUTTON" };
+static const char *statuscmds[] = { "st -e htop", "sdmenu" };
 static char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
+static char *menucmd[] = { "/bin/sh", "layoutmenu" };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -101,7 +102,7 @@ static Key keys[] = {
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,              Button1,        spawn,          SHCMD("layoutmenu") },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button1,        spawn,          {.v = statuscmd } },
