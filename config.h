@@ -2,20 +2,20 @@
 
 #include "push.c"
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "cozette:size=10" };
-static const char col_gray1[]       = "#222222";
+static const char col_gray1[]       = "#1d2021";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char col_gray4[]       = "#fbf1c7";
+static const char col_cyan[]        = "#6E8679";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray1, col_cyan,  col_cyan  },
 };
 
 /* tagging */
@@ -28,12 +28,12 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        50,50,500,500,        5 },
-	{ "st",       NULL,       "float",    0,            1,           -1,        50,50,500,500,        5 },
+	{ "st",       NULL,       "htop",     0,            1,           -1,        500,250,600,400,      5 },
 	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        50,50,500,500,        5 },
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -61,31 +61,31 @@ static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
 /* commands spawned when clicking statusbar, the mouse button pressed is exported as BUTTON */
-static const char *statuscmds[] = { "stattop", "sdmenu" };
+static const char *statuscmds[] = {"stattop", "sdmenu" };
 static char *statuscmd[] = { "/bin/sh", "-c", NULL, NULL };
-static char *menucmd[] = { "/bin/sh", "layoutmenu" };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_j,      pushdown,       {0} },
+	{ MODKEY|ShiftMask,             XK_k,      pushup,         {0} },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,             XK_h,      incnmaster,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_l,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,	                XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
+	{ MODKEY,	                XK_s,      togglesticky,   {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_space,  setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
+	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -104,6 +104,7 @@ static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        spawn,          SHCMD("layoutmenu") },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,              Button1,        spawn,          SHCMD("9m") },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
 	{ ClkStatusText,        0,              Button1,        spawn,          {.v = statuscmd } },
 	{ ClkStatusText,        0,              Button2,        spawn,          {.v = statuscmd } },
