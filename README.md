@@ -1,15 +1,31 @@
-dwm - dynamic window manager
-============================
+# This is my personal build of DWM
+Patches I applied are:
+* sticky
+* attachbottom
+* resizecorner
+* push
+* scratchpad
+* zoomswap
+* statuscmd
+* pertag
+* dwmc
+* cyclelayouts
+
+available ayouts are:
+* tiled
+* monocle
+* deck
+* spiral, dwindle
+* centeredmaster, centeredfloatingmaster
+
 dwm is an extremely fast, small, and dynamic window manager for X.
 
 
-Requirements
-------------
+#Requirements
 In order to build dwm you need the Xlib header files.
 
 
-Installation
-------------
+#Installation
 Edit config.mk to match your local setup (dwm is installed into
 the /usr/local namespace by default).
 
@@ -19,8 +35,7 @@ necessary as root):
     make clean install
 
 
-Running dwm
------------
+# Running dwm
 Add the following line to your .xinitrc to start dwm using startx:
 
     exec dwm
@@ -42,7 +57,6 @@ like this in your .xinitrc:
     exec dwm
 
 
-Configuration
--------------
-The configuration of dwm is done by creating a custom config.h
-and (re)compiling the source code.
+#Configuration
+The configuration of dwm is done by creating a custom config.h  
+and (re)compiling the source code.  

@@ -2712,8 +2712,8 @@ main(int argc, char *argv[])
 		die("dwm: cannot get xcb connection\n");
 	checkotherwm();
 	setup();
-	if (pledge("stdio rpath proc exec", NULL) == -1)
-		die("pledge");
+	//if (pledge("stdio rpath proc exec", NULL) == -1)
+		//die("pledge");
 	scan();
 	run();
 	cleanup();
